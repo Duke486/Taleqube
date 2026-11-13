@@ -1,0 +1,29 @@
+AniShelf UI 操作与动画阻塞排查 — 2026-10-31
+
+范围：主线程同步工作、图片加载与缓存、资料库过滤排序、详情交互、导航刷新、持久化、启动与导入。结果来自源码检查和构建/回归检查；本轮未采集设备帧时间或 Instruments trace。
+
+本轮修改
+1. Features/Poster.swift / PosterCache：原来每张图片写入后枚举全部缓存文件、读取元数据并排序。改为首次建立磁盘索引，后续按文件增量更新大小与最近访问时间，只有超过限额才排序淘汰。减少同一个图片 actor 内的排队开销。
+2. Core/Intelligence.swift / run：下载后的 ImageIO 缩略图生成和 JPEG 编码原来在 MainActor 执行，现移入 utility detached task。
+3. Features/TrackingView.swift / records：原来排序比较器每次调用 display，包含本地化与文本处理；现每项先计算一次显示信息，再过滤排序。
+4. Core/Tracking.swift / writeBackup：确认当前磁盘内容等于最后提交内容后，直接轮换已验证字节，不再通过 PersistentJSON.write 重复读取、解码整份旧资料库；编码结果未变化时跳过磁盘写入和恢复副本轮换。保留外部修改检测和提交失败回滚。
+5. Core/Diagnostics.swift / persist：日志导出完成后的保存改为串行后台队列写入，不再让主线程等待此前排队的日志写入。
+
+仍存在的阻塞路径，按处理优先级排列
+P1 高频编辑：Features/WorkSheet.swift / preserveDraft 在评分、状态和进度修改时调用 setProgressDraft。Core/Tracking.swift / setProgressDraft 每次同步读取并解码全部草稿，再完整编码和写入两份文件。连续输入和步进操作直接承担磁盘延迟。下一步应采用串行草稿存储器、内存草稿与合并写入，并明确关闭/后台切换的落盘等待和失败反馈。
+P1 资料库提交：TrackingStore.persist 仍在 MainActor 汇总全部记录、编码全量备份并同步写盘。匹配、翻译和同步回执可能多次调用。此次仅减少重复工作；彻底移除阻塞需要异步串行提交协议，提交成功后确认 UI 状态，失败恢复已提交快照，并处理 await 期间的新编辑与外部文件冲突。
+P1 启动：TrackingStore.init 同步恢复资料库及平台片单、迁移记录、编码比较前后数据。大资料库会推迟首帧。应将读取与迁移放入后台初始化阶段，主线程只发布完整结果。
+P1 导入/导出：ConnectionsView 文件导入回调同步 Data(contentsOf:)，TrackingStore 的归档编码、验证、文件快照、写入和失败回滚均含主线程工作；DiagnosticLog.restoreArchive 仍使用 writer.sync。需要将完整事务迁移，不能只异步化某一份文件写入。
+P2 操作禁用：WorkSheet.performFindAssociations 设置 busy=true；recording 和部分编辑控件共用 busy，AI 匹配最长 deadline 为 1800 秒。这是明确的操作等待，不是帧渲染卡顿。应拆分匹配/翻译/提交状态，同时保持关联冲突检测及关闭时确认未保存修改或进行中匹配的要求。
+P2 导航刷新：NativeShelfNavigation.updateContent 在 representable 更新时重设所有已创建页面的 hosting root，包括未显示页面；侧栏转场也触发。应通过实际 SwiftUI 更新次数与 Time Profiler 确定成本，再缩小更新范围，保留固定导航和页面状态。
+P2 图片队列：PosterCache 所有者表每新增一张图片都完整编码写盘，解码准备也串行在同一个 actor 执行；全屏大图与海报请求可互相排队。后续可合并所有者表写入并为解码设置独立、有限并发的执行器。不能让清理缓存后的旧请求重新发布图片。
+P2 GPU 路径：详情横图多层模糊、阴影、材质与渐变，以及网格双指实时重排，需要真机 Animation Hitches/Core Animation 检查才能确定是否掉帧；本轮未把这些效果判为已证实瓶颈。
+
+验证
+Scripts/build-simulator.sh：BUILD SUCCEEDED（首次沙箱内宏插件启动失败，允许外部构建后成功）。
+Scripts/check-language.sh：188 项通过。
+Scripts/check-persistence.sh：66 项通过，包含新增的无变化提交不写盘、不轮换恢复副本检查。
+尚未采集真机滚动、缩放、sheet 开关、输入与匹配并行时的帧时间，不能给出 FPS 或耗时改善数值。
+
+建议性能复验场景
+使用同一台设备、同一份资料库，分别记录冷启动、快速滚动、双指网格缩放、详情缩放转场、连续评分输入、进度步进、AI 匹配期间编辑和关闭、整库导入。记录主线程调用栈、hitch 时长、图片队列等待与提交耗时；重点比较资料库规模增长后的表现。

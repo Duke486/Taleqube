@@ -1,0 +1,14 @@
+.DS_Store
+DerivedData/
+build/
+*.xcuserstate
+xcuserdata/
+*.ipa
+*.p12
+*.mobileprovision
+
+# Local release artifacts and clean public export
+release/package/
+release/PublicSource/
+release/*.zip
+release/SHA256SUMS.txt
