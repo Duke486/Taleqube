@@ -1,0 +1,84 @@
+{
+  "fill": {
+    "automatic-gradient": "extended-srgb:0.28627,0.22353,0.71765,1.00000"
+  },
+  "groups": [
+    {
+      "name": "Top",
+      "layers": [
+        {
+          "image-name": "Top.svg",
+          "name": "Top",
+          "position": {
+            "scale": 1,
+            "translation-in-points": [
+              0,
+              0
+            ]
+          }
+        }
+      ],
+      "shadow": {
+        "kind": "neutral",
+        "opacity": 0.5
+      },
+      "translucency": {
+        "enabled": false,
+        "value": 0
+      }
+    },
+    {
+      "name": "Book",
+      "layers": [
+        {
+          "image-name": "Book.svg",
+          "name": "Book",
+          "position": {
+            "scale": 1,
+            "translation-in-points": [
+              0,
+              0
+            ]
+          }
+        }
+      ],
+      "shadow": {
+        "kind": "neutral",
+        "opacity": 0.5
+      },
+      "translucency": {
+        "enabled": false,
+        "value": 0
+      }
+    },
+    {
+      "name": "Screen",
+      "layers": [
+        {
+          "image-name": "Screen.svg",
+          "name": "Screen",
+          "position": {
+            "scale": 1,
+            "translation-in-points": [
+              0,
+              0
+            ]
+          }
+        }
+      ],
+      "shadow": {
+        "kind": "neutral",
+        "opacity": 0.5
+      },
+      "translucency": {
+        "enabled": false,
+        "value": 0
+      }
+    }
+  ],
+  "supported-platforms": {
+    "squares": [
+      "iOS"
+    ]
+  }
+}

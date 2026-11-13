@@ -397,7 +397,7 @@ import ImageIO
             request.url?.path == "/v0/search/subjects" && body["sort"] as? String == "score"
         }!.body["filter"] as! [String:Any]
         check(filteredBGM["type"] as? [Int] == [2] && filteredBGM["air_date"] as? [String] == [">=2024-10-01","<2025-01-01"] && filteredBGM["rating"] as? [String] == [">=8"],"Bangumi anime uses animated subjects, quarter boundaries and score filters")
-        let suite = "AniShelf-tests-" + UUID().uuidString
+        let suite = "Taleqube-tests-" + UUID().uuidString
         let defaults = UserDefaults(suiteName:suite)!
         defer { defaults.removePersistentDomain(forName:suite) }
         defaults.set(256,forKey:"artwork.cacheLimitMB"); defaults.set("client",forKey:"anilist.clientID")
@@ -434,11 +434,11 @@ import ImageIO
         defer { try? FileManager.default.removeItem(at:editingDirectory) }
         let editorConfiguration = URLSessionConfiguration.ephemeral
         editorConfiguration.protocolClasses = [LanguageFixtureProtocol.self]
-        editorConfiguration.httpAdditionalHeaders = ["X-AniShelf-Test-Scope":"local-editor"]
+        editorConfiguration.httpAdditionalHeaders = ["X-Taleqube-Test-Scope":"local-editor"]
         let editorAPI = CatalogAPI(session:URLSession(configuration:editorConfiguration),credential:{ _ in "fixture" },diagnostics:DiagnosticLog(directory:diagnosticsDirectory))
         let editor = TrackingStore(directory:editingDirectory,api:editorAPI,intelligence:ai,mediaSearch:search)
         func editorRequests() -> Int {
-            LanguageFixtureProtocol.requests.filter { $0.value(forHTTPHeaderField:"X-AniShelf-Test-Scope") == "local-editor" }.count
+            LanguageFixtureProtocol.requests.filter { $0.value(forHTTPHeaderField:"X-Taleqube-Test-Scope") == "local-editor" }.count
         }
         let primary = Work(source:.tmdb,remoteID:"9801",kind:.tv,title:"编辑测试")
         let remoteEntry = Work(source:.anilist,remoteID:"9802",kind:.tv,title:"第二季")

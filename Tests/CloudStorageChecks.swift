@@ -20,7 +20,7 @@ import Foundation
         check(restored.localizations?.titles == original.localizations?.titles,"Chinese names retained")
         try a.captureCloudFields(fields,namespace:"library")
         let seed = try a.pendingCloudOperations()
-        let defaults = UserDefaults(suiteName:"AniShelf.CloudInboxTest." + UUID().uuidString)!
+        let defaults = UserDefaults(suiteName:"Taleqube.CloudInboxTest." + UUID().uuidString)!
         let storage = CloudStorage(db:b,cloudPreferences:defaults,cloudReadCredentials:{ names in Dictionary(uniqueKeysWithValues:names.map { ($0,"") }) },cloudWriteCredentials:{ _ in })
         let inboxKey = "anishelf/v1/journal/test.json"
         check(try !storage.cloudHasBatch(inboxKey),"Unknown batch requires download")

@@ -2,7 +2,7 @@
 
 ## 当前实现
 
-主存储为 Application Support/AniShelf/library.sqlite，使用 WAL、外键约束和 FULL 同步。日常保存不再覆盖 tracking-v1.json，也不再生成整库 .previous 副本。
+主存储为 Application Support/AniShelf/library.sqlite（保留升级前的数据目录），使用 WAL、外键约束和 FULL 同步。日常保存不再覆盖 tracking-v1.json，也不再生成整库 .previous 副本。
 
 存储采用关系索引与不可变内容图结合的结构。业务 Swift 模型继续供现有匹配、同步和界面使用，持久化时拆成独立集合：items、deliveries、associations、drafts、snapshots、titles、overviews、translations、history、recommendations。每条根记录引用不可变节点；节点正文使用 SHA-256 内容标识，相同元数据、映射、证据、请求正文与历史状态只保存一次。不同内容的同一平台作品保留不同版本，不以较新元数据覆盖历史。
 
@@ -24,7 +24,7 @@ TrackingStore 仍持有业务模型，写入前按 Equatable 比较单条作品�
 
 ## 备份格式
 
-系统注册类型 app.anishelf.archive，扩展名 .anishelf。文件打开后进入设置的数据导入确认；若详情正在编辑，先保留详情，关闭后继续导入。
+系统注册类型 app.anishelf.archive，首选扩展名 .taleqube，兼容 .anishelf。文件打开后进入设置的数据导入确认；若详情正在编辑，先保留详情，关闭后继续导入。
 
 未加密文件是 ZIP：
 
@@ -36,7 +36,7 @@ TrackingStore 仍持有业务模型，写入前按 Equatable 比较单条作品�
 
 可选密码加密整个 ZIP：PBKDF2-HMAC-SHA256、600,000 次、随机 16 字节盐、AES-256-GCM。无密码时保留原有完整备份的明文凭据行为，并在界面说明。错误密码、压缩数据错误、校验不符和截断文件在导入前拒绝。
 
-导出先取得一致的业务快照，在后台生成归档。导入仅接受 .anishelf。备份包含资料库、平台片单、投递与云同步队列、冲突和删除恢复数据、偏好、诊断、平台与 S3 凭据以及加密资料库密钥。恢复云连接后由用户手动启用同步，目标设备使用自己的设备标识。
+导出先取得一致的业务快照，在后台生成归档。导入接受 .taleqube 与旧版 .anishelf。备份包含资料库、平台片单、投递与云同步队列、冲突和删除恢复数据、偏好、诊断、平台与 S3 凭据以及加密资料库密钥。恢复云连接后由用户手动启用同步，目标设备使用自己的设备标识。
 
 ## 导入恢复
 

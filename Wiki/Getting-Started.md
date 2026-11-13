@@ -2,7 +2,7 @@
 
 ## 安装
 
-1. 在 [Releases](https://github.com/Duke486/AniShelf/releases/latest) 下载 IPA。
+1. 在 [Releases](https://github.com/Duke486/Taleqube/releases/latest) 下载 IPA。
 2. 使用自己的签名工具与 Apple 账号签名并安装。公开 IPA 不携带开发者个人证书、设备列表或平台密钥。
 3. 使用 iOS / iPadOS 27 或更高版本。专为 13 英寸 iPad、iPhone Air 设计并验证，iPad 建议横屏。
 

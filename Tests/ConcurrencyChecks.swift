@@ -107,7 +107,7 @@ final class DelayedProtocol:URLProtocol, @unchecked Sendable {
         try await permits.acquire(); permits.release()
         check(true,"Cancelling a queued waiter does not leak the permit")
 
-        let root = URL.temporaryDirectory.appending(path:"AniShelf-concurrency-" + UUID().uuidString)
+        let root = URL.temporaryDirectory.appending(path:"Taleqube-concurrency-" + UUID().uuidString)
         defer { try? FileManager.default.removeItem(at:root) }
         let configuration = URLSessionConfiguration.ephemeral
         configuration.protocolClasses = [DelayedProtocol.self]; configuration.httpMaximumConnectionsPerHost = 64

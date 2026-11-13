@@ -63,7 +63,7 @@ final class CloudS3Server:URLProtocol, @unchecked Sendable {
         } catch S3Failure.message { }
         check(try CloudKeyStore.load(read:{ keychain[$0] ?? "" }) == savedMaterial,"Another library cannot overwrite the saved key")
         func device(_ name:String) -> (TrackingStore,CloudSync) {
-            let suiteName = "AniShelf.CloudTest." + UUID().uuidString
+            let suiteName = "Taleqube.CloudTest." + UUID().uuidString
             let defaults = UserDefaults(suiteName:suiteName)!
             let diagnostics = DiagnosticLog(directory:root.appendingPathComponent(name+"-logs"))
             let store = TrackingStore(directory:root.appendingPathComponent(name),api:CatalogAPI(credential:{ _ in "" },diagnostics:diagnostics))

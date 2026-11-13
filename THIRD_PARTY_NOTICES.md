@@ -1,6 +1,6 @@
 # 第三方资料与标识
 
-AniShelf 源代码采用 Apache-2.0。宣传截图中的海报、剧照、角色、作品名称以及 TMDB、Trakt、AniList、Bangumi、MyAnimeList、Infuse 等名称与标识归各自权利人所有；它们不作为项目原创资产授予许可，也不表示第三方对 AniShelf 的赞助或背书。
+Taleqube 源代码采用 Apache-2.0。宣传截图中的海报、剧照、角色、作品名称以及 TMDB、Trakt、AniList、Bangumi、MyAnimeList、Infuse 等名称与标识归各自权利人所有；它们不作为项目原创资产授予许可，也不表示第三方对 Taleqube 的赞助或背书。
 
 - TMDB：This product uses the TMDB API but is not endorsed or certified by TMDB. [TMDB](https://www.themoviedb.org/)
 - Trakt：[Trakt](https://trakt.tv/)

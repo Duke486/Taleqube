@@ -19,8 +19,8 @@
 ## 打开 Infuse
 
 1. 设备安装 Infuse，并在 Infuse 中配置自己的媒体库。
-2. 在 AniShelf 中确认影视作品已匹配有效 TMDB 身份。
+2. 在 Taleqube 中确认影视作品已匹配有效 TMDB 身份。
 3. 点击作品标题旁、季卡片、集封面或集详情的 Infuse 入口。
-4. AniShelf 打开 Infuse 对应电影、季或剧集的详情页，再在 Infuse 中选择观看。
+4. Taleqube 打开 Infuse 对应电影、季或剧集的详情页，再在 Infuse 中选择观看。
 
-跳转不追加自动播放参数，也不修改 AniShelf 本机观看状态。Infuse 中需有可用媒体；AniShelf 不提供影片文件。
+跳转不追加自动播放参数，也不修改 Taleqube 本机观看状态。Infuse 中需有可用媒体；Taleqube 不提供影片文件。

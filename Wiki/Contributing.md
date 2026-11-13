@@ -1,4 +1,4 @@
-# 欢迎参与 AniShelf
+# 欢迎参与 Taleqube
 
 欢迎提交 PR：平台接口适配、Mac 支持、设备布局、辅助功能、翻译体验、问题修复和文档都很需要。
 
@@ -12,4 +12,4 @@
 
 贡献采用项目的 Apache-2.0 许可。请保留原版权、许可和适用的 NOTICE；修改文件注明变更。作品图片与第三方平台标识不属于项目源代码许可范围。
 
-更多入口见 [CONTRIBUTING.md](https://github.com/Duke486/AniShelf/blob/main/CONTRIBUTING.md) 与 [开发文档](https://github.com/Duke486/AniShelf/blob/main/Docs/开发与验证.md)。
+更多入口见 [CONTRIBUTING.md](https://github.com/Duke486/Taleqube/blob/main/CONTRIBUTING.md) 与 [开发文档](https://github.com/Duke486/Taleqube/blob/main/Docs/开发与验证.md)。

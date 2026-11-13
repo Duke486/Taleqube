@@ -4,7 +4,7 @@
 
 在设置 → 翻译与匹配中填写自己的 DeepSeek / OpenAI API Key 并保存。DeepSeek Key 还用于联网查询作品中文名与别名；复杂匹配会按配置使用高级模型，因此请确认对应服务可用。
 
-应用的模型与请求实现见仓库 `AniShelf/Core/Intelligence.swift`。当前默认常规模型为 `deepseek-flash`，复杂判断可升级到已配置的 `gpt-6.1-terra`；实际调用需由服务端支持对应模型。模型用量按用户所配置服务的规则计费。
+应用的模型与请求实现见仓库 `Taleqube/Core/Intelligence.swift`。当前默认常规模型为 `deepseek-flash`，复杂判断可升级到已配置的 `gpt-6.1-terra`；实际调用需由服务端支持对应模型。模型用量按用户所配置服务的规则计费。
 
 ## 翻译
 

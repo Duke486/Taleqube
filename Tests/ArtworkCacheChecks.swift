@@ -13,7 +13,7 @@ actor DiagnosticLog {
     static let shared = DiagnosticLog()
     func record(_ level:String,component:String,message:String) {}
 }
-let testRoot = URL.temporaryDirectory.appending(path:"AniShelf-artwork-check-" + UUID().uuidString)
+let testRoot = URL.temporaryDirectory.appending(path:"Taleqube-artwork-check-" + UUID().uuidString)
 
 // PRODUCTION_CACHE
 

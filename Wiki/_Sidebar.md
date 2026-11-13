@@ -1,4 +1,4 @@
-**AniShelf 使用指南**
+**Taleqube 使用指南**
 
 - [首页](Home)
 - [开始使用](Getting-Started)
